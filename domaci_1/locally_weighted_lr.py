@@ -10,15 +10,28 @@ def get_W(x_sample, X_train, tau):
     return W
 
 
+def lwlr(x_samples, x_train, y_train, tau):
+    y_samples = np.zeros(x_samples.shape[0])
+    for i in range(x_samples.shape[0]):
+        W = get_W(x_samples[i, np.newaxis], x_train, tau=tau)
+
+        X_train = add_bias(x_train)
+
+        theta = np.linalg.inv(X_train.T @ W @ X_train) @ X_train.T @ W @ y_train
+        # theta = np.linalg.inv(X_train.T.dot(W).dot(X_train)).dot(X_train.T).dot(W).dot(y_train)
+        X_sample = add_bias(x_samples[i, np.newaxis])
+        y_samples[i] = X_sample @ theta
+
+    return y_samples
+
+
 if __name__ == '__main__':
-    y_train, X_train = load_data('data_train.csv')
-    y_val, X_val = load_data('data_val.csv')
+    y_train, x_train = load_data('data_train.csv')
+    y_val, x_val = load_data('data_val.csv')
 
-    x_sample = X_val[0, :]
-    tau = 0.1
-    W = get_W(x_sample, X_train, tau)
-    X = add_bias(X_train)
+    tau = np.linspace(start=0.01, stop=1, num=1)
+    rms = np.zeros_like(tau)
+    for i in range(len(tau)):
+        y_samples = lwlr(x_val, x_train, y_train, tau=tau[i])
 
-    theta = (X.T @ W @ X) ** (-1) @ X.T @ W @ y_train
-
-    y_sample = add_bias(x_sample.reshape(1, len(x_sample))) @ theta
+        # rms[i] = np.sqrt((y))

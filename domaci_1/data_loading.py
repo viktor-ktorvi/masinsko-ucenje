@@ -5,7 +5,7 @@ import numpy as np
 def load_data(filename):
     data = pd.read_csv(filename, header=None).to_numpy()
 
-    y = data[:, -1].reshape(data.shape[0], 1)
+    y = data[:, -1]
     X = data[:, :-1]
 
     return y, X

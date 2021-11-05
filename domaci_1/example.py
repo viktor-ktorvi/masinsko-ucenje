@@ -1,22 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from locally_weighted_lr import get_W
+from locally_weighted_lr import get_W, lwlr
 from data_loading import add_bias
 from mpl_toolkits.mplot3d import Axes3D
-
-
-def lwlr(x_samples, x_train, y_train, tau):
-    y_samples = np.zeros(x_samples.shape[0])
-    for i in range(x_samples.shape[0]):
-        W = get_W(x_samples[i, np.newaxis], x_train, tau=tau)
-
-        X = add_bias(x_train)
-
-        theta = ((X.T @ W @ X) ** (-1)) @ X.T @ W @ y_train
-        X_sample = add_bias(x_samples[i, np.newaxis])
-        y_samples[i] = X_sample @ theta
-
-    return y_samples
 
 
 def example_1d():
@@ -48,7 +34,7 @@ def example_2d():
     X, Y = np.meshgrid(x, y)
 
     z = np.cos(X) + np.cos(Y) + 0.1 * np.random.randn(nx, ny)
-
+    # z = np.cos(X + Y) + 0.01 * np.random.randn(nx, ny)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
