@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 from domaci_1.data_loading import load_data, add_bias
 
 
@@ -29,9 +30,16 @@ if __name__ == '__main__':
     y_train, x_train = load_data('data_train.csv')
     y_val, x_val = load_data('data_val.csv')
 
-    tau = np.linspace(start=0.01, stop=1, num=1)
+    tau = np.linspace(start=0.005, stop=0.1, num=1000)
     rms = np.zeros_like(tau)
     for i in range(len(tau)):
         y_samples = lwlr(x_val, x_train, y_train, tau=tau[i])
 
-        # rms[i] = np.sqrt((y))
+        rms[i] = np.sqrt(np.sum((y_val - y_samples)**2) / len(y_val))
+
+    plt.figure()
+    plt.plot(tau, rms)
+    plt.title('RMS error with respect to $\tau$')
+    plt.xlabel('$\tau$')
+    plt.ylabel('rms error')
+    plt.show()
