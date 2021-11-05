@@ -30,7 +30,7 @@ if __name__ == '__main__':
     y_train, x_train = load_data('data_train.csv')
     y_val, x_val = load_data('data_val.csv')
 
-    tau = np.linspace(start=0.005, stop=0.1, num=1000)
+    tau = np.logspace(start=-2, stop=0, num=100)
     rms = np.zeros_like(tau)
     for i in range(len(tau)):
         y_samples = lwlr(x_val, x_train, y_train, tau=tau[i])
@@ -39,7 +39,11 @@ if __name__ == '__main__':
 
     plt.figure()
     plt.plot(tau, rms)
-    plt.title('RMS error with respect to $\tau$')
-    plt.xlabel('$\tau$')
+    plt.xscale('log')
+    # plt.yscale('log')
+    plt.title(r'RMS error with respect to $\tau$')
+    plt.xlabel(r'$\tau$')
     plt.ylabel('rms error')
     plt.show()
+
+    print('Lowest RMSError at tau_min_rms = {:5.3f}, RMSError(tau_min_rms) = {:2.2f}'.format(tau[np.argmin(rms)], np.min(rms)))

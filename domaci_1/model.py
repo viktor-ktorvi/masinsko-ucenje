@@ -1,3 +1,4 @@
+import numpy as np
 from domaci_1.data_loading import load_data
 from domaci_1.locally_weighted_lr import lwlr
 
@@ -5,10 +6,14 @@ from domaci_1.locally_weighted_lr import lwlr
 def model(X):
     y_train, x_train = load_data('data_train.csv')
 
-    return lwlr(X, x_train, y_train, tau=0.1)
+    return lwlr(X, x_train, y_train, tau=0.102)
 
 
 if __name__ == '__main__':
-    y_val, x_val = load_data('data_val.csv')
+    y, x = load_data('data_test.csv')
 
-    y_ = model(x_val)
+    y_ = model(x)
+
+    rms = np.sqrt(np.sum((y - y_) ** 2) / len(y))
+
+    print('RMSError = {:2.2f}'.format(rms))
