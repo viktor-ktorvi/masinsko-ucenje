@@ -7,22 +7,23 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def example_1d():
     x_train = np.linspace(start=-2 * np.pi, stop=2 * np.pi, num=500)
-    y_train = np.sin(x_train) + 0.1 * np.random.randn(len(x_train))
+    y_train = np.sin(x_train) + 0.3 * np.random.randn(len(x_train))
 
     x_train = x_train.reshape((len(x_train), 1))
 
     plt.figure()
     plt.grid()
-    plt.plot(x_train, y_train, 'o')
-    plt.title('Example')
+    plt.plot(x_train, y_train, 'o', label='training samples')
+    plt.title('Example 1D')
     plt.xlabel('x')
     plt.ylabel('y')
 
-    x_samples = np.random.uniform(low=-2 * np.pi, high=2 * np.pi, size=100)
+    x_samples = np.random.uniform(low=-2 * np.pi, high=2 * np.pi, size=300)
     x_samples = x_samples.reshape((len(x_samples), 1))
 
     y_samples = lwlr(x_samples, x_train, y_train, tau=0.1)
-    plt.plot(x_samples, y_samples, 'rx')
+    plt.plot(x_samples, y_samples, 'rx', label='test samples')
+    plt.legend()
 
     plt.show()
 

@@ -1,6 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from domaci_1.data_loading import load_data, add_bias
+from data_loading import load_data, add_bias
 
 
 def get_W(x_sample, X_train, tau):
@@ -26,7 +26,7 @@ def lwlr(x_samples, x_train, y_train, tau):
     return y_samples
 
 
-if __name__ == '__main__':
+def hyperparameter_search():
     y_train, x_train = load_data('data_train.csv')
     y_val, x_val = load_data('data_val.csv')
 
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     for i in range(len(tau)):
         y_samples = lwlr(x_val, x_train, y_train, tau=tau[i])
 
-        rms[i] = np.sqrt(np.sum((y_val - y_samples)**2) / len(y_val))
+        rms[i] = np.sqrt(np.sum((y_val - y_samples) ** 2) / len(y_val))
 
     plt.figure()
     plt.plot(tau, rms)
@@ -46,4 +46,9 @@ if __name__ == '__main__':
     plt.ylabel('rms error')
     plt.show()
 
-    print('Lowest RMSError at tau_min_rms = {:5.3f}, RMSError(tau_min_rms) = {:2.2f}'.format(tau[np.argmin(rms)], np.min(rms)))
+    print('Lowest RMSError at tau_min_rms = {:5.3f}, RMSError(tau_min_rms) = {:2.2f}'.format(tau[np.argmin(rms)],
+                                                                                             np.min(rms)))
+
+
+if __name__ == '__main__':
+    hyperparameter_search()
