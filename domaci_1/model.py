@@ -1,6 +1,6 @@
 import numpy as np
-from domaci_1.data_loading import load_data
-from domaci_1.locally_weighted_lr import lwlr
+from data_loading import load_data
+from locally_weighted_lr import lwlr
 
 
 def model(X):

@@ -38,6 +38,7 @@ def hyperparameter_search():
         rms[i] = np.sqrt(np.sum((y_val - y_samples) ** 2) / len(y_val))
 
     plt.figure()
+    plt.grid()
     plt.plot(tau, rms)
     plt.xscale('log')
     # plt.yscale('log')

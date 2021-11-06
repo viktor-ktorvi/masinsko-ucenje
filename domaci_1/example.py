@@ -22,7 +22,7 @@ def example_1d():
     x_samples = x_samples.reshape((len(x_samples), 1))
 
     y_samples = lwlr(x_samples, x_train, y_train, tau=0.1)
-    plt.plot(x_samples, y_samples, 'rx', label='test samples')
+    plt.plot(x_samples, y_samples, 'ro', label='test samples')
     plt.legend()
 
     plt.show()
@@ -36,14 +36,14 @@ def example_2d():
 
     z = np.cos(X) + np.cos(Y) + 0.1 * np.random.randn(nx, ny)
     # z = np.cos(X + Y) + 0.01 * np.random.randn(nx, ny)
-    fig = plt.figure()
+    fig = plt.figure(figsize=(7, 7))
     ax = fig.add_subplot(111, projection='3d')
 
-    ax.scatter(X, Y, z)
-    # ax.plot_surface(xv, yv, np.cos(xv) + np.cos(yv), color='r')
-    ax.set_xlabel('X Label')
-    ax.set_ylabel('Y Label')
-    ax.set_zlabel('Z Label')
+    ax.plot_surface(X, Y, z, alpha=0.3)
+    ax.set_title('Example 2D')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
 
     x_samples = np.random.uniform(low=-2 * np.pi, high=2 * np.pi, size=(500, 2))
     x_train = np.hstack((X.flatten().reshape(nx * ny, 1), Y.flatten().reshape(nx * ny, 1)))
@@ -57,5 +57,5 @@ def example_2d():
 
 
 if __name__ == '__main__':
-    example_1d()
+    # example_1d()
     example_2d()
